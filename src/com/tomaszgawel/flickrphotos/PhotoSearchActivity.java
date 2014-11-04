@@ -73,7 +73,8 @@ public class PhotoSearchActivity extends Activity implements OnQueryTextListener
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		final Intent intent = new Intent(this, SinglePhotoActivity.class);
-		intent.putExtra(SinglePhotoActivity.EXTRA_ITEM, mAdapter.getItem(position));
+		intent.putExtra(SinglePhotoActivity.EXTRA_SEARCH_ITEM,
+				mAdapter.getItem(position));
 		startActivity(intent);
 	}
 

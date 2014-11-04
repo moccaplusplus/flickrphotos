@@ -1,4 +1,4 @@
-package com.tomaszgawel.flickrphotos;
+package com.tomaszgawel.flickrphotos.volley;
 
 import android.content.Context;
 import android.graphics.Bitmap;

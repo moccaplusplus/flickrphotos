@@ -1,4 +1,4 @@
-package com.tomaszgawel.flickrphotos;
+package com.tomaszgawel.flickrphotos.location;
 
 import android.content.Context;
 import android.content.Intent;

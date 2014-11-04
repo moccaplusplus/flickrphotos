@@ -1,4 +1,4 @@
-package com.tomaszgawel.flickrphotos;
+package com.tomaszgawel.flickrphotos.volley;
 
 import java.io.File;
 
@@ -12,7 +12,8 @@ import com.android.volley.toolbox.ImageLoader;
 
 public class VolleyHelper {
 
-	private static final String CACHE_DIR_QUERIES = "cache_query";
+	private static final String CACHE_DIR_QUERIES = "flickr_photos_cache";
+
 	private static VolleyHelper sInstance;
 
 	public static VolleyHelper getInstance(Context context) {

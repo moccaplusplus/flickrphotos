@@ -1,13 +1,13 @@
-package com.tomaszgawel.flickrphotos;
+package com.tomaszgawel.flickrphotos.provider;
 
 import android.content.SearchRecentSuggestionsProvider;
 
-public class FlickrRecentSearchProvider extends SearchRecentSuggestionsProvider {
+public class RecentSearchProvider extends SearchRecentSuggestionsProvider {
 
 	public static final String AUTHORITY = "com.tomaszgawel.flickrphotos";
 	public static final int MODE = DATABASE_MODE_QUERIES;
 
-	public FlickrRecentSearchProvider() {
+	public RecentSearchProvider() {
 		setupSuggestions(AUTHORITY, MODE);
 	}
 }

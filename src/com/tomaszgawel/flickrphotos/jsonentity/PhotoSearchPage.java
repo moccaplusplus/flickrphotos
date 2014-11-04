@@ -8,12 +8,16 @@ public class PhotoSearchPage {
 
 	@JsonProperty("page")
 	public int pageNo;
+
 	@JsonProperty("pages")
 	public int pageCount;
+
 	@JsonProperty("perpage")
 	public int countPerPage;
+
 	@JsonProperty("total")
 	public int totalCount;
+
 	@JsonProperty("photo")
-	public List<PhotoSearchPageEntry> photoList;
+	public List<PhotoSearchEntry> photoList;
 }

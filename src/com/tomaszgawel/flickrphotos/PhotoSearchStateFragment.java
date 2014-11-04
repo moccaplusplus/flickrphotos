@@ -10,12 +10,14 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.tomaszgawel.flickrphotos.jsonentity.PhotoSearchPage;
+import com.tomaszgawel.flickrphotos.location.LocationHelper;
+import com.tomaszgawel.flickrphotos.volley.PhotoSearchRequest;
+import com.tomaszgawel.flickrphotos.volley.VolleyHelper;
 
 public final class PhotoSearchStateFragment extends Fragment
 implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 
 	public static final String TAG = PhotoSearchStateFragment.class.getName();
-	private static final String API_KEY = "7acf6968c81051637d18ebeb85258588";
 
 	public static void init(PhotoSearchActivity a) {
 		final FragmentManager fm = a.getFragmentManager();
@@ -41,7 +43,7 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 
 	private final LocationHelper mLocationHelper = new LocationHelper();
 	private VolleyHelper mVolleyHelper;
-	private FlickrQueryRequest mLastRequest;
+	private PhotoSearchRequest mLastRequest;
 	private String mQuery;
 	private VolleyError mError;
 	private PhotoSearchPage mResponse;
@@ -126,7 +128,7 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 	}
 
 	private void queueRequest() {
-		mLastRequest = new FlickrQueryRequest(API_KEY, mQuery, mPage,
+		mLastRequest = new PhotoSearchRequest(getApiKey(), mQuery, mPage,
 				mLocationHelper.getLocation(), this, this);
 		mVolleyHelper.requestQueue.add(mLastRequest);
 		if (getActivity() != null) {
@@ -143,5 +145,10 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 		mError = null;
 		mResponse = null;
 		mHasNextPage = false;
+	}
+
+	private String getApiKey() {
+		// TODO : put api key to preferences
+		return AppPreferencesActivity.API_KEY;
 	}
 }

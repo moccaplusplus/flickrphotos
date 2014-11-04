@@ -1,6 +1,12 @@
 package com.tomaszgawel.flickrphotos.jsonentity;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class FlickrApiBaseJsonResponse {
+
+	static final ObjectMapper jsonMapper = new ObjectMapper().configure(
+			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 	public String stat;
 	public int code;
