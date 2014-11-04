@@ -58,9 +58,11 @@ public class Deserializers {
 				DeserializationContext ctxt)
 				throws IOException, JsonProcessingException {
 			final JsonNode node = jp.getCodec().<JsonNode> readTree(jp);
-			final List<String> list = new ArrayList<String>(node.size());
-			if (node.isArray()) {
-				final Iterator<JsonNode> it = node.elements();
+			final JsonNode tagNode = node.get("tag");
+			final int size = tagNode == null ? 0 : node.size();
+			final List<String> list = new ArrayList<String>(size);
+			if (size > 0) {
+				final Iterator<JsonNode> it = tagNode.elements();
 				while (it.hasNext()) {
 					String tag = parseSingleTag(it.next());
 					if (!TextUtils.isEmpty(tag)) {

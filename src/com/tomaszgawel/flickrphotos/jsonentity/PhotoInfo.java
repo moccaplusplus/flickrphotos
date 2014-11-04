@@ -20,7 +20,6 @@ public class PhotoInfo {
 	@JsonDeserialize(using = ContentDeserializer.class)
 	public String description;
 
-	@JsonProperty("tag")
 	@JsonDeserialize(using = TagsDeserializer.class)
 	public List<String> tags;
 
