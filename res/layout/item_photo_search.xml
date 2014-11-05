@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="wrap_content">
-    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <com.android.volley.toolbox.NetworkImageView
-        android:layout_margin="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:background="#77777777"
-        android:padding="4dp"
+        android:layout_gravity="top|center_horizontal"
+    	android:padding="5dp"
         android:scaleType="fitCenter" />
-    
-    <TextView android:id="@+id/textView"
-        android:layout_marginBottom="15dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:maxLines="1"
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:ellipsize="end"
-        android:layout_height="wrap_content"/>
-</RelativeLayout>
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#66FFFFFF"
+        android:maxLines="1" />
+</LinearLayout>

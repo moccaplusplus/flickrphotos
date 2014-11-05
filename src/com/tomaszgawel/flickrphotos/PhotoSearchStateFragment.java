@@ -129,7 +129,7 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 
 	private void queueRequest() {
 		mLastRequest = new PhotoSearchRequest(getApiKey(), mQuery, mPage,
-				mLocationHelper.getLocation(), this, this);
+				getCountPerPage(), mLocationHelper.getLocation(), this, this);
 		mVolleyHelper.requestQueue.add(mLastRequest);
 		if (getActivity() != null) {
 			((PhotoSearchActivity) getActivity()).onLoading(mQuery, mPage);
@@ -150,5 +150,9 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 	private String getApiKey() {
 		// TODO : put api key to preferences
 		return AppPreferencesActivity.API_KEY;
+	}
+
+	private int getCountPerPage() {
+		return AppPreferencesActivity.COUNT_PER_PAGE;
 	}
 }

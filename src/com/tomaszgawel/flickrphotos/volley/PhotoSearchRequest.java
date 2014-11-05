@@ -26,11 +26,14 @@ public class PhotoSearchRequest extends Request<PhotoSearchPage> {
 	private final Listener<PhotoSearchPage> mListener;
 
 	public PhotoSearchRequest(String apiKey, String query, int page,
-			Location location, Listener<PhotoSearchPage> listener,
+			int countPerPage, Location location,
+			Listener<PhotoSearchPage> listener,
 			ErrorListener errorListener) {
-		super(Request.Method.GET, buildUrl(apiKey, query, page, location),
+		super(Request.Method.GET, buildUrl(apiKey, query, page, countPerPage,
+				location),
 				errorListener);
 		mListener = listener;
+		setShouldCache(true);
 	}
 
 	@Override
@@ -59,10 +62,11 @@ public class PhotoSearchRequest extends Request<PhotoSearchPage> {
 	}
 
 	private static String buildUrl(String apiKey, String query, int page,
-			Location location) {
+			int countPerPage, Location location) {
 		final Uri.Builder b = Uri.parse(BASE_URL).buildUpon()
 				.appendQueryParameter("api_key", apiKey)
-				.appendQueryParameter("text", query);
+				.appendQueryParameter("text", query)
+				.appendQueryParameter("per_page", String.valueOf(countPerPage));
 		if (page > 1) {
 			b.appendQueryParameter("page", String.valueOf(page));
 		}

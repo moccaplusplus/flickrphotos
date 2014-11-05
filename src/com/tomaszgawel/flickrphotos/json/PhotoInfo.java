@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.text.TextUtils;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -16,6 +15,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class PhotoInfo {
+
+	private static final LocationInfo NULL_LOCATION = new LocationInfo();
 
 	public static final class LocationInfo {
 
@@ -101,7 +102,6 @@ public class PhotoInfo {
 		return node == null ? "" : node.asText().trim();
 	}
 
-	@JsonProperty("owner")
 	@JsonDeserialize(using = OwnerDeserializer.class)
 	public String owner;
 
@@ -114,5 +114,5 @@ public class PhotoInfo {
 	@JsonDeserialize(using = TagsDeserializer.class)
 	public List<String> tags;
 
-	public LocationInfo location;
+	public LocationInfo location = NULL_LOCATION;
 }

@@ -29,6 +29,7 @@ public class PhotoInfoRequest extends Request<PhotoInfo> {
 			Listener<PhotoInfo> listener, ErrorListener errorListener) {
 		super(Request.Method.GET, buildUrl(apiKey, photoId, secret), errorListener);
 		mListener = listener;
+		setShouldCache(true);
 	}
 
 	@Override
