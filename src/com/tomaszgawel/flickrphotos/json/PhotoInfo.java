@@ -1,4 +1,4 @@
-package com.tomaszgawel.flickrphotos.jsonentity;
+package com.tomaszgawel.flickrphotos.json;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,16 +7,36 @@ import java.util.List;
 
 import android.text.TextUtils;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-public class Deserializers {
+public class PhotoInfo {
 
-	static final class OwnerDeserializer extends
-			JsonDeserializer<String> {
+	public static final class LocationInfo {
+
+		public double latitude;
+
+		public double longitude;
+
+		@JsonDeserialize(using = ContentDeserializer.class)
+		public String locality;
+
+		@JsonDeserialize(using = ContentDeserializer.class)
+		public String county;
+
+		@JsonDeserialize(using = ContentDeserializer.class)
+		public String region;
+
+		@JsonDeserialize(using = ContentDeserializer.class)
+		public String country;
+	}
+
+	static final class OwnerDeserializer extends JsonDeserializer<String> {
 
 		@Override
 		public String deserialize(JsonParser jp, DeserializationContext ctxt)
@@ -39,8 +59,7 @@ public class Deserializers {
 		}
 	}
 
-	static final class ContentDeserializer extends
-			JsonDeserializer<String> {
+	static final class ContentDeserializer extends JsonDeserializer<String> {
 
 		@Override
 		public String deserialize(JsonParser jp, DeserializationContext ctxt)
@@ -50,13 +69,12 @@ public class Deserializers {
 		}
 	}
 
-	static final class TagsDeserializer extends
-			JsonDeserializer<List<String>> {
+	static final class TagsDeserializer extends JsonDeserializer<List<String>> {
 
 		@Override
 		public List<String> deserialize(JsonParser jp,
 				DeserializationContext ctxt)
-				throws IOException, JsonProcessingException {
+						throws IOException, JsonProcessingException {
 			final JsonNode node = jp.getCodec().<JsonNode> readTree(jp);
 			final JsonNode tagNode = node.get("tag");
 			final int size = tagNode == null ? 0 : node.size();
@@ -82,4 +100,19 @@ public class Deserializers {
 	static String getString(JsonNode node) {
 		return node == null ? "" : node.asText().trim();
 	}
+
+	@JsonProperty("owner")
+	@JsonDeserialize(using = OwnerDeserializer.class)
+	public String owner;
+
+	@JsonDeserialize(using = ContentDeserializer.class)
+	public String title;
+
+	@JsonDeserialize(using = ContentDeserializer.class)
+	public String description;
+
+	@JsonDeserialize(using = TagsDeserializer.class)
+	public List<String> tags;
+
+	public LocationInfo location;
 }

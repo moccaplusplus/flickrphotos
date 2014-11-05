@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">FlickrPhotos</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="cache_dir_name">flickr_photos_cache</string>
+    <string name="photo_info_summary"><![CDATA[
+        Title: <b>%1$s</b><br/>
+        Description: <b>%2$s</b><br/>
+        Owner: <b>%3$s</b><br/>
+        Latitude: <b>%4$s</b><br/>
+        Longitude: <b>%5$s</b><br/>
+        Locality: <b>%6$s</b><br/>
+        County: <b>%7$s</b><br/>
+        Region: <b>%8$s</b><br/>
+        Country: <b>%9$s</b><br/>
+        Tags: <b>%10$s</b>
+    ]]></string>
 </resources>

@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.tomaszgawel.flickrphotos.jsonentity.PhotoSearchPage;
+import com.tomaszgawel.flickrphotos.json.PhotoSearchPage;
 import com.tomaszgawel.flickrphotos.location.LocationHelper;
 import com.tomaszgawel.flickrphotos.volley.PhotoSearchRequest;
 import com.tomaszgawel.flickrphotos.volley.VolleyHelper;

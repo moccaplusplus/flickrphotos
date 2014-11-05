@@ -13,7 +13,7 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
-import com.tomaszgawel.flickrphotos.jsonentity.PhotoSearchPage;
+import com.tomaszgawel.flickrphotos.json.PhotoSearchPage;
 
 public class PhotoSearchActivity extends Activity implements OnQueryTextListener, OnItemClickListener {
 
@@ -27,7 +27,7 @@ public class PhotoSearchActivity extends Activity implements OnQueryTextListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_search_results);
 
 		mGridView = (GridView) findViewById(R.id.gridView);
 		mGridView.setAdapter(mAdapter);

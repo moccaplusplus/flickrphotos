@@ -14,9 +14,9 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.tomaszgawel.flickrphotos.jsonentity.FlickrApiFailureException;
-import com.tomaszgawel.flickrphotos.jsonentity.PhotoInfo;
-import com.tomaszgawel.flickrphotos.jsonentity.PhotoInfoResponse;
+import com.tomaszgawel.flickrphotos.json.FlickrApiFailureException;
+import com.tomaszgawel.flickrphotos.json.PhotoInfo;
+import com.tomaszgawel.flickrphotos.json.PhotoInfoResponse;
 
 public class PhotoInfoRequest extends Request<PhotoInfo> {
 

@@ -1,4 +1,4 @@
-package com.tomaszgawel.flickrphotos.jsonentity;
+package com.tomaszgawel.flickrphotos.json;
 
 import java.io.IOException;
 

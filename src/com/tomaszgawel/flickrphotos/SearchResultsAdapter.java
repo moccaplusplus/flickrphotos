@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.tomaszgawel.flickrphotos.jsonentity.PhotoSearchEntry;
-import com.tomaszgawel.flickrphotos.jsonentity.PhotoSize;
+import com.tomaszgawel.flickrphotos.json.PhotoSearchPage;
+import com.tomaszgawel.flickrphotos.json.PhotoUrl;
 import com.tomaszgawel.flickrphotos.volley.VolleyHelper;
 
 public class SearchResultsAdapter extends BaseAdapter {
@@ -22,7 +22,7 @@ public class SearchResultsAdapter extends BaseAdapter {
 		TextView mTextView;
 	}
 
-	private List<PhotoSearchEntry> mEntries;
+	private List<PhotoSearchPage.Entry> mEntries;
 
 	@Override
 	public int getCount() {
@@ -30,7 +30,7 @@ public class SearchResultsAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public PhotoSearchEntry getItem(int position) {
+	public PhotoSearchPage.Entry getItem(int position) {
 		return mEntries.get(position);
 	}
 
@@ -53,14 +53,14 @@ public class SearchResultsAdapter extends BaseAdapter {
 		} else {
 			tag = (ViewTag) convertView.getTag();
 		}
-		final PhotoSearchEntry item = getItem(position);
-		tag.mImageView.setImageUrl(item.getPhotoUrl(PhotoSize.THUMB),
+		final PhotoSearchPage.Entry item = getItem(position);
+		tag.mImageView.setImageUrl(PhotoUrl.THUMB.get(item),
 				VolleyHelper.getInstance(context).imageLoader);
 		tag.mTextView.setText(item.title);
 		return convertView;
 	}
 
-	public void swapEntries(List<PhotoSearchEntry> entries) {
+	public void swapEntries(List<PhotoSearchPage.Entry> entries) {
 		mEntries = entries;
 		notifyDataSetChanged();
 	}

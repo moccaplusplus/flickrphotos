@@ -66,7 +66,6 @@ public class LocationHelper {
 		}
 	}
 
-
 	public Location getLocation() {
 		return mLocation;
 	}

@@ -12,8 +12,9 @@ import com.android.volley.toolbox.ImageLoader;
 
 public class VolleyHelper {
 
-	private static final String CACHE_DIR_QUERIES = "flickr_photos_cache";
-
+	public static final String SHARE_PROVIDER_AUTHORITY =
+			"com.tomaszgawel.flickrphotos.share";
+	private static final String CACHE_DIR_NAME = "flickr_photos_cache";
 	private static VolleyHelper sInstance;
 
 	public static VolleyHelper getInstance(Context context) {
@@ -27,7 +28,7 @@ public class VolleyHelper {
 	public final ImageLoader imageLoader;
 
 	private VolleyHelper(Context context) {
-		File cacheDir = new File(context.getCacheDir(), CACHE_DIR_QUERIES);
+		File cacheDir = new File(context.getCacheDir(), CACHE_DIR_NAME);
 		if (!((cacheDir.exists() || cacheDir.mkdirs()) && cacheDir.isDirectory())) {
 			throw new IllegalStateException();
 		}

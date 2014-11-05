@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-    
+    android:layout_height="wrap_content" >
+
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/imageView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:scaleType="centerCrop" />
-    
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:fitsSystemWindows="true"
+        android:scaleType="fitXY" />
+
     <TextView
-        android:layout_below="@+id/imageView" 
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:background="#99000000"
+        android:lineSpacingExtra="2sp"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:scrollbars="vertical"
+        tools:ignore="RtlHardcoded" />
+
 </RelativeLayout>
