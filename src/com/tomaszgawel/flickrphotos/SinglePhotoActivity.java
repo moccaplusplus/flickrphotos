@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -42,7 +41,6 @@ Response.Listener<PhotoInfo>, Response.ErrorListener {
 		mSharedImageUrl = PhotoUrl.NORMAL.get(entry);
 		mImageView.setImageUrl(mSharedImageUrl, volley.imageLoader);
 		mTextView = (TextView) findViewById(R.id.textView);
-		mTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
 		mRunningRequest = new PhotoInfoRequest(getApiKey(), entry.id,
 				entry.secret, this, this);
 		// mLoading.setVisibility(View.VISIBLE);

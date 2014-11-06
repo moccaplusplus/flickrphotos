@@ -27,8 +27,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.tomaszgawel.flickrphotos.SinglePhotoActivity"
-            android:theme="@android:style/Theme.Holo.Dialog.MinWidth" />
+        <activity android:name="com.tomaszgawel.flickrphotos.SinglePhotoActivity" />
         
         <provider
             android:name="android.support.v4.content.FileProvider"
