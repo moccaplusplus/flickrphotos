@@ -12,8 +12,6 @@ import com.android.volley.toolbox.ImageLoader;
 
 public class VolleyHelper {
 
-	public static final String SHARE_PROVIDER_AUTHORITY =
-			"com.tomaszgawel.flickrphotos.share";
 	private static final String CACHE_DIR_NAME = "flickr_photos_cache";
 	private static VolleyHelper sInstance;
 

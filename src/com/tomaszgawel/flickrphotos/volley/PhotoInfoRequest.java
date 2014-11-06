@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.android.volley.Cache.Entry;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,8 +40,9 @@ public class PhotoInfoRequest extends Request<PhotoInfo> {
 					HttpHeaderParser.parseCharset(response.headers));
 			final PhotoInfoResponse result = PhotoInfoResponse.parse(json);
 			result.throwIfFailed();
-			return Response.success(result.photoInfo,
-					HttpHeaderParser.parseCacheHeaders(response));
+			final Entry cache = HttpHeaderParser.parseCacheHeaders(response);
+			cache.data = PhotoInfoResponse.asBytes(result);
+			return Response.success(result.photoInfo, cache);
 		} catch (UnsupportedEncodingException e) {
 			return Response.error(new VolleyError(e));
 		} catch (JsonProcessingException e) {

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tomaszgawel.flickrphotos.MainActivity" >
+    <item
+            android:id="@+id/action_share"
+            android:showAsAction="always"
+            android:title="@string/action_share"
+            android:actionProviderClass="android.widget.ShareActionProvider" />
+    
+    <item 
+        android:id="@+id/action_reload"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_reload"
+        android:icon="@drawable/ic_menu_refresh"/>
+</menu>

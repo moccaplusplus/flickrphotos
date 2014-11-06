@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FlickrPhotos</string>
+    
     <string name="action_settings">Settings</string>
-    <string name="cache_dir_name">flickr_photos_cache</string>
+    
+    <string name="action_share">Share</string>
+    
+    <string name="action_reload">Reload</string>
+    
+    <string name="single_photo_activity_title">Photo details</string>
+    
+    <string name="single_photo_activity_load_failed">Load failed: %1$s</string>
+    
+    <string name="content_description_big_photo">Big photo</string>
+    
+    <string name="loading">Loading&#8230;</string>
+        
     <string name="photo_info_summary"><![CDATA[
         Title: <b>%1$s</b><br/>
         Description: <b>%2$s</b><br/>

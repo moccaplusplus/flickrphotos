@@ -27,18 +27,15 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.tomaszgawel.flickrphotos.SinglePhotoActivity" />
+        <activity android:name="com.tomaszgawel.flickrphotos.SinglePhotoActivity"
+            android:label="@string/single_photo_activity_title" />
         
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="com.tomaszgawel.flickrphotos.provider.PhotoShareProvider"
             android:authorities="com.tomaszgawel.flickrphotos.share"
             android:grantUriPermissions="true"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
-        </provider>
-        
+            android:exported="false" />
+       
     </application>
 
 </manifest>

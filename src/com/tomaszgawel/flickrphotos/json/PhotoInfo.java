@@ -43,6 +43,9 @@ public class PhotoInfo {
 		public String deserialize(JsonParser jp, DeserializationContext ctxt)
 				throws IOException, JsonProcessingException {
 			JsonNode node = jp.getCodec().readTree(jp);
+			if (!node.isObject()) {
+				return getString(node);
+			}
 			String name = getString(node.get("username"));
 			String realName = getString(node.get("realname"));
 			if (TextUtils.isEmpty(name)) {
@@ -66,7 +69,7 @@ public class PhotoInfo {
 		public String deserialize(JsonParser jp, DeserializationContext ctxt)
 				throws IOException, JsonProcessingException {
 			JsonNode node = jp.getCodec().<JsonNode> readTree(jp);
-			return getString(node.get("_content"));
+			return getString(node.isObject() ? node.get("_content") : node);
 		}
 	}
 
