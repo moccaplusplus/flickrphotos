@@ -1,4 +1,4 @@
-package com.tomaszgawel.flickrphotos;
+package com.tomaszgawel.flickrphotos.adapter;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.tomaszgawel.flickrphotos.R;
 import com.tomaszgawel.flickrphotos.json.PhotoSearchPage;
 import com.tomaszgawel.flickrphotos.json.PhotoUrl;
 import com.tomaszgawel.flickrphotos.volley.VolleyHelper;

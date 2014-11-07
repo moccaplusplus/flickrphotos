@@ -20,7 +20,8 @@
         
         <activity
             android:name="com.tomaszgawel.flickrphotos.PhotoSearchActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,12 +31,22 @@
         <activity android:name="com.tomaszgawel.flickrphotos.SinglePhotoActivity"
             android:label="@string/single_photo_activity_title" />
         
+        <activity android:name="com.tomaszgawel.flickrphotos.RecentQueriesActivity"
+            android:label="@string/recent_queries_activity_title"
+            android:theme="@android:style/Theme.Holo.Dialog.MinWidth" />
+                
+        <activity android:name="com.tomaszgawel.flickrphotos.AppPreferencesActivity"
+            android:label="@string/app_preferences_activity_title" />
+        
         <provider
             android:name="com.tomaszgawel.flickrphotos.provider.PhotoShareProvider"
             android:authorities="com.tomaszgawel.flickrphotos.share"
             android:grantUriPermissions="true"
             android:exported="false" />
-       
+        
+        <provider 
+            android:name="com.tomaszgawel.flickrphotos.provider.RecentSearchProvider"
+            android:authorities="com.tomaszgawel.flickrphotos.search"
+            android:exported="false" />
     </application>
-
 </manifest>

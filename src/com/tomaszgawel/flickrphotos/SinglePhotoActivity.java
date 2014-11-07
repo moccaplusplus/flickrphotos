@@ -72,10 +72,13 @@ public class SinglePhotoActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_reload) {
-			mInfoRequestLogic.sendRequest();
-			mImageRequestLogic.sendRequest();
-			return true;
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+			case R.id.action_reload:
+				reload();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -110,6 +113,11 @@ public class SinglePhotoActivity extends Activity {
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
 
+	private void reload() {
+		mInfoRequestLogic.sendRequest();
+		mImageRequestLogic.sendRequest();
+	}
+
 	private class ImageRequestLogic extends VolleyRequestListeners<Bitmap> {
 
 		private ImageView mImageView;
@@ -139,7 +147,7 @@ public class SinglePhotoActivity extends Activity {
 		public void onResponse(Bitmap response) {
 			mImageView.setImageBitmap(response);
 			setShareIntent(PhotoShareProvider.createShareIntent(mUrl,
-					"Flickr photo", 0));
+					displayName(mEntry.title), response.getByteCount()));
 		}
 
 		@Override
@@ -147,6 +155,17 @@ public class SinglePhotoActivity extends Activity {
 			mImageView.setImageResource(R.drawable.error_big);
 			toast(getString(R.string.single_photo_activity_load_failed,
 					error.toString()));
+		}
+
+		private String displayName(String title) {
+			if (TextUtils.isEmpty(title)) {
+				return getString(R.string.photo_display_name_missing);
+			}
+			if (title.length() > 25) {
+				return getString(R.string.photo_display_name_truncated,
+						title.substring(0, 22));
+			}
+			return title;
 		}
 	}
 
@@ -201,7 +220,7 @@ public class SinglePhotoActivity extends Activity {
 	}
 
 	private abstract class VolleyRequestListeners<T> implements
-			Response.Listener<T>, Response.ErrorListener {
+	Response.Listener<T>, Response.ErrorListener {
 
 		Request<T> mRequest;
 

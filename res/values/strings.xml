@@ -8,13 +8,25 @@
     
     <string name="action_reload">Reload</string>
     
+    <string name="action_recent_queries">Recent queries</string>
+    
+    <string name="recent_queries_activity_title">Recent queries</string>
+    
     <string name="single_photo_activity_title">Photo details</string>
+    
+    <string name="app_preferences_activity_title">Preferences</string>
     
     <string name="single_photo_activity_load_failed">Load failed: %1$s</string>
     
     <string name="content_description_big_photo">Big photo</string>
     
     <string name="loading">Loading&#8230;</string>
+    
+    <string name="photo_display_name_missing">Photo from flickr</string>
+    
+    <string name="photo_display_name_truncated">%1$s&#8230;</string>
+    
+    <string name="no_recent_queries">No recent queries</string>
         
     <string name="photo_info_summary"><![CDATA[
         Title: <b>%1$s</b><br/>
@@ -28,4 +40,10 @@
         Country: <b>%9$s</b><br/>
         Tags: <b>%10$s</b>
     ]]></string>
+        
+    <string name="clear_recent_searches">Clear recent searches</string>
+        
+    <string name="close">Close</string>
+        
+    <string name="search_hint">Search in title, description, tags</string>
 </resources>

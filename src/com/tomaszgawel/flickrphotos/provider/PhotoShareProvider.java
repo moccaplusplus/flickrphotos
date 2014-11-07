@@ -22,7 +22,7 @@ public class PhotoShareProvider extends ContentProvider {
 
 	public static final String AUTHORITY = "com.tomaszgawel.flickrphotos.share";
 	private static final String[] COLUMNS = {
-			OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE };
+		OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE };
 
 	public static Intent createShareIntent(String url, String displayName,
 			int size) {
@@ -31,8 +31,11 @@ public class PhotoShareProvider extends ContentProvider {
 				displayName, size);
 		if (contentUri != null) {
 			shareIntent = new Intent(Intent.ACTION_SEND);
+			if (!TextUtils.isEmpty(displayName)) {
+				shareIntent.putExtra(Intent.EXTRA_TEXT, displayName);
+			}
 			shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-			shareIntent.setDataAndType(contentUri, "image/*");
+			shareIntent.setType("image/jpeg");
 			shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		}
 		return shareIntent;
@@ -123,7 +126,7 @@ public class PhotoShareProvider extends ContentProvider {
 		}.start();
 		return d[0];
 	}
-	
+
 	@Override
 	public boolean onCreate() {
 		return true;

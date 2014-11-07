@@ -3,6 +3,8 @@ package com.tomaszgawel.flickrphotos;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +15,18 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
+import com.tomaszgawel.flickrphotos.adapter.SearchResultsAdapter;
 import com.tomaszgawel.flickrphotos.json.PhotoSearchPage;
+import com.tomaszgawel.flickrphotos.provider.RecentSearchProvider;
 
-public class PhotoSearchActivity extends Activity implements OnQueryTextListener, OnItemClickListener {
+public class PhotoSearchActivity extends Activity implements
+OnQueryTextListener, OnItemClickListener {
+
+	public static final String EXTRA_QUERY =
+			"com.tomaszgawel.flickrphotos.EXTRA_QUERY";
 
 	private final SearchResultsAdapter mAdapter = new SearchResultsAdapter();
+	private SearchRecentSuggestions mSearchRecentSuggestions;
 	private SearchView mSearchView;
 	private GridView mGridView;
 	private TextView mPageInfo;
@@ -33,10 +42,18 @@ public class PhotoSearchActivity extends Activity implements OnQueryTextListener
 		mGridView.setAdapter(mAdapter);
 		mGridView.setOnItemClickListener(this);
 
+		mSearchRecentSuggestions = RecentSearchProvider.createSuggestions(this);
 		mSearchView = (SearchView) findViewById(R.id.searchView);
 		mSearchView.setOnQueryTextListener(this);
-
 		PhotoSearchStateFragment.init(this);
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		final String query = intent.getStringExtra(EXTRA_QUERY);
+		if (!TextUtils.isEmpty(query)) {
+			mSearchView.setQuery(query, true);
+		}
 	}
 
 	public void onLoading(String query, int pageNo) {
@@ -66,7 +83,9 @@ public class PhotoSearchActivity extends Activity implements OnQueryTextListener
 
 	@Override
 	public boolean onQueryTextSubmit(String query) {
+		mSearchRecentSuggestions.saveRecentQuery(query, null);
 		PhotoSearchStateFragment.get(this).query(query);
+		mSearchView.clearFocus();
 		return true;
 	}
 
@@ -86,13 +105,23 @@ public class PhotoSearchActivity extends Activity implements OnQueryTextListener
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		switch(item.getItemId()) {
+			case R.id.action_settings:
+				openPreferences();
+				return true;
+
+			case R.id.action_recent_queries:
+				openRecentQueries();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void openRecentQueries() {
+		startActivity(new Intent(this, RecentQueriesActivity.class));
+	}
+
+	private void openPreferences() {
+		startActivity(new Intent(this, AppPreferencesActivity.class));
 	}
 }

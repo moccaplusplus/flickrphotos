@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:divider="?android:attr/listDivider"
+    android:showDividers="middle" >
+
+    <FrameLayout
+        style="?android:attr/dialogLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" >
+
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_recent_queries" />
+
+        <ListView
+            android:id="@+id/listView"
+            android:divider="?android:attr/listDividerAlertDialog"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal"
+        tools:ignore="InefficientWeight" >
+
+        <Button
+            android:id="@+id/clearRecent"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/clear_recent_searches"
+            android:textAppearance="?android:attr/textAppearanceButton"
+            tools:ignore="NestedWeights" />
+
+        <Button
+            android:id="@+id/close"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/close"
+            android:textAppearance="?android:attr/textAppearanceButton" />
+    </LinearLayout>
+
+</LinearLayout>
