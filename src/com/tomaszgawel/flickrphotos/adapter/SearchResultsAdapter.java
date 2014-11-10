@@ -3,6 +3,7 @@ package com.tomaszgawel.flickrphotos.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,23 @@ import com.tomaszgawel.flickrphotos.json.PhotoUrl;
 import com.tomaszgawel.flickrphotos.volley.VolleyHelper;
 
 public class SearchResultsAdapter extends BaseAdapter {
+
+	public static final class SquareImageView extends NetworkImageView {
+
+		public SquareImageView(Context context, AttributeSet attrs) {
+			super(context, attrs);
+		}
+
+		public SquareImageView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		}
+
+		@Override
+		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			int width = MeasureSpec.getSize(widthMeasureSpec);
+			setMeasuredDimension(width, width);
+		}
+	}
 
 	private static final class ViewTag {
 

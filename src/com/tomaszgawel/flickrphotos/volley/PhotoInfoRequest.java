@@ -42,6 +42,7 @@ public class PhotoInfoRequest extends Request<PhotoInfo> {
 			result.throwIfFailed();
 			final Entry cache = HttpHeaderParser.parseCacheHeaders(response);
 			cache.data = PhotoInfoResponse.asBytes(result);
+			cache.ttl = cache.softTtl = cache.serverDate + 30 * 60 * 1000;
 			return Response.success(result.photoInfo, cache);
 		} catch (UnsupportedEncodingException e) {
 			return Response.error(new VolleyError(e));

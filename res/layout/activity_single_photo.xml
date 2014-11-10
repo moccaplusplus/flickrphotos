@@ -8,10 +8,13 @@
     android:baselineAligned="false">
 
     <FrameLayout
+        android:id="@+id/imageFrame"
         android:layout_weight="5" 
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="15dp">
+        
+        <include layout="@layout/loading_common"/>
         
         <ImageView
             android:id="@+id/imageView"
@@ -26,36 +29,22 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/infoFrame"
         android:layout_weight="2"
         android:minHeight="200dp"
+        android:layout_margin="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         
-        <TextView 
-            android:id="@+id/loadingView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/loading_big"
-            android:text="@string/loading"
-            android:layout_gravity="center"
-            android:visibility="visible" />
-        
-        <View
-            android:id="@+id/errorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/error_big"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+        <include layout="@layout/loading_common"/>
         
 	    <TextView
 	        android:id="@+id/textView"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:scrollbars="vertical"
-	        android:scrollbarStyle="outsideOverlay"
+	        android:scrollbarStyle="outsideInset"
 	        android:lineSpacingExtra="2sp"
-	        android:padding="15dp" 
 	        android:layout_gravity="fill_horizontal|center_vertical"
 	        android:visibility="gone" />
     </FrameLayout>

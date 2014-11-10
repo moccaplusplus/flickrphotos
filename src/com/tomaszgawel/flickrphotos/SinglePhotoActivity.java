@@ -12,10 +12,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,8 +50,8 @@ public class SinglePhotoActivity extends Activity {
 		if (!TextUtils.isEmpty(mEntry.title)) {
 			setTitle(mEntry.title);
 		}
-		mInfoRequestLogic.init();
-		mImageRequestLogic.init();
+		mInfoRequestLogic.init((ViewGroup) findViewById(R.id.infoFrame));
+		mImageRequestLogic.init((ViewGroup) findViewById(R.id.imageFrame));
 		mInfoRequestLogic.sendRequest();
 		mImageRequestLogic.sendRequest();
 	}
@@ -75,9 +76,6 @@ public class SinglePhotoActivity extends Activity {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				finish();
-				return true;
-			case R.id.action_reload:
-				reload();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -104,20 +102,6 @@ public class SinglePhotoActivity extends Activity {
 		}
 	}
 
-	String getApiKey() {
-		// TODO : put api key to preferences
-		return AppPreferencesActivity.API_KEY;
-	}
-
-	void toast(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-	}
-
-	private void reload() {
-		mInfoRequestLogic.sendRequest();
-		mImageRequestLogic.sendRequest();
-	}
-
 	private class ImageRequestLogic extends VolleyRequestListeners<Bitmap> {
 
 		private ImageView mImageView;
@@ -125,17 +109,23 @@ public class SinglePhotoActivity extends Activity {
 		private String mUrl;
 
 		@Override
-		void init() {
+		public void init(ViewGroup root) {
+			super.init((ViewGroup) root.getChildAt(0));
 			mScreenSize = new Point();
 			getWindowManager().getDefaultDisplay().getSize(mScreenSize);
 			mUrl = PhotoUrl.NORMAL.get(mEntry);
-			mImageView = (ImageView) findViewById(R.id.imageView);
+			mImageView = (ImageView) root.getChildAt(1);
+		}
+
+		public void sendRequest() {
+			sendRequest(getString(R.string.loading_image));
 		}
 
 		@Override
-		void sendRequest() {
-			cancel();
-			mImageView.setImageResource(R.drawable.loading_big);
+		public void sendRequest(CharSequence loadingText) {
+			super.sendRequest(loadingText);
+			mImageView.setImageBitmap(null);
+			mImageView.setVisibility(View.GONE);
 			setShareIntent(null);
 			mRequest = new ImageRequest(mUrl, this, mScreenSize.x,
 					mScreenSize.y, Config.RGB_565, this);
@@ -145,6 +135,8 @@ public class SinglePhotoActivity extends Activity {
 
 		@Override
 		public void onResponse(Bitmap response) {
+			super.onResponse(response);
+			mImageView.setVisibility(View.VISIBLE);
 			mImageView.setImageBitmap(response);
 			setShareIntent(PhotoShareProvider.createShareIntent(mUrl,
 					displayName(mEntry.title), response.getByteCount()));
@@ -152,9 +144,7 @@ public class SinglePhotoActivity extends Activity {
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			mImageView.setImageResource(R.drawable.error_big);
-			toast(getString(R.string.single_photo_activity_load_failed,
-					error.toString()));
+			super.onErrorResponse(error);
 		}
 
 		private String displayName(String title) {
@@ -171,12 +161,31 @@ public class SinglePhotoActivity extends Activity {
 
 	private class InfoRequestLogic extends VolleyRequestListeners<PhotoInfo> {
 
-		private View mLoadingView;
-		private View mErrorView;
 		private TextView mTextView;
 
 		@Override
+		public void init(ViewGroup root) {
+			super.init((ViewGroup) root.getChildAt(0));
+			mTextView = (TextView) root.getChildAt(1);
+			mTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
+		}
+
+		public void sendRequest() {
+			sendRequest(getString(R.string.loading_description));
+		}
+
+		@Override
+		public void sendRequest(CharSequence loadingText) {
+			super.sendRequest(loadingText);
+			mTextView.setVisibility(View.GONE);
+			mRequest = new PhotoInfoRequest(PhotoSearchStateFragment.API_KEY,
+			        mEntry.id, mEntry.secret, this, this);
+			getVolley().requestQueue.add(mRequest);
+		}
+
+		@Override
 		public void onResponse(PhotoInfo response) {
+			super.onResponse(response);
 			final LocationInfo location = response.location;
 			mTextView.setText(Html.fromHtml(
 					getString(R.string.photo_info_summary, response.title,
@@ -185,54 +194,68 @@ public class SinglePhotoActivity extends Activity {
 							location.locality, location.county,
 							location.region, location.country,
 							TextUtils.join(", ", response.tags))));
-			mLoadingView.setVisibility(View.GONE);
-			mErrorView.setVisibility(View.GONE);
 			mTextView.setVisibility(View.VISIBLE);
 		}
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			mLoadingView.setVisibility(View.GONE);
+			super.onErrorResponse(error);
 			mTextView.setVisibility(View.GONE);
-			mErrorView.setVisibility(View.VISIBLE);
-			toast(getString(R.string.single_photo_activity_load_failed,
-					error.toString()));
-		}
-
-		@Override
-		void init() {
-			mLoadingView = findViewById(R.id.loadingView);
-			mErrorView = findViewById(R.id.errorView);
-			mTextView = (TextView) findViewById(R.id.textView);
-			mTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
-		}
-
-		@Override
-		void sendRequest() {
-			cancel();
-			mTextView.setVisibility(View.GONE);
-			mErrorView.setVisibility(View.GONE);
-			mLoadingView.setVisibility(View.VISIBLE);
-			mRequest = new PhotoInfoRequest(getApiKey(), mEntry.id,
-					mEntry.secret, this, this);
-			getVolley().requestQueue.add(mRequest);
 		}
 	}
 
 	private abstract class VolleyRequestListeners<T> implements
-	Response.Listener<T>, Response.ErrorListener {
+	Response.Listener<T>, Response.ErrorListener, OnClickListener {
 
+		ViewGroup mRoot;
 		Request<T> mRequest;
+		View mLoadingView;
+		TextView mTextView;
+		View mRetryButton;
+		CharSequence mLastRequestLoadingText;
 
-		abstract void init();
+		public void init(ViewGroup root) {
+			mRoot = root;
+			mLoadingView = root.getChildAt(0);
+			mTextView = (TextView) root.getChildAt(1);
+			mRetryButton = root.getChildAt(2);
+			mRetryButton.setOnClickListener(this);
+		}
 
-		abstract void sendRequest();
+		public void sendRequest(CharSequence loadingText) {
+			cancel();
+			mTextView.setText(mLastRequestLoadingText = loadingText);
+			mRetryButton.setVisibility(View.GONE);
+			mLoadingView.setVisibility(View.VISIBLE);
+			mRoot.setVisibility(View.VISIBLE);
+		}
 
-		void cancel() {
+		public void cancel() {
 			if (mRequest != null) {
 				mRequest.cancel();
 				mRequest = null;
+				onErrorResponse(new VolleyError("Request cancelled"));
 			}
+		}
+
+		@Override
+		public void onResponse(T response) {
+			mRequest = null;
+			mRoot.setVisibility(View.GONE);
+		}
+
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			mRequest = null;
+			mLoadingView.setVisibility(View.GONE);
+			mRetryButton.setVisibility(View.VISIBLE);
+			mTextView.setText(getString(R.string.load_failed, error.toString()));
+			mRoot.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onClick(View v) {
+			sendRequest(mLastRequestLoadingText);
 		}
 	}
 }

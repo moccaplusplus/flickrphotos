@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FlickrPhotos</string>
+    <string name="app_name">Flickr Photos</string>
     
     <string name="action_settings">Settings</string>
     
@@ -10,17 +10,17 @@
     
     <string name="action_recent_queries">Recent queries</string>
     
-    <string name="recent_queries_activity_title">Recent queries</string>
+    <string name="recent_queries_title">Recent queries</string>
     
     <string name="single_photo_activity_title">Photo details</string>
     
-    <string name="app_preferences_activity_title">Preferences</string>
-    
-    <string name="single_photo_activity_load_failed">Load failed: %1$s</string>
+    <string name="load_failed">Load failed: %1$s</string>
     
     <string name="content_description_big_photo">Big photo</string>
     
-    <string name="loading">Loading&#8230;</string>
+    <string name="loading_image">Loading image&#8230;</string>
+    
+    <string name="loading_description">Loading description&#8230;</string>
     
     <string name="photo_display_name_missing">Photo from flickr</string>
     
@@ -41,9 +41,23 @@
         Tags: <b>%10$s</b>
     ]]></string>
         
-    <string name="clear_recent_searches">Clear recent searches</string>
+    <string name="clear_recent_searches">Clear recent</string>
         
     <string name="close">Close</string>
         
     <string name="search_hint">Search in title, description, tags</string>
+    
+    <string name="next_page_button">Next &gt;&gt;</string>
+    
+    <string name="prev_page_button">&lt;&lt; Previous</string>
+        
+    <string name="button_reload">Load again!</string>
+        
+    <string name="page_info">Page %1$d of %2$d</string>
+        
+    <string name="empty_result">Empty result</string>
+        
+    <string name="loading_query">Loading page %1$d&#8230;</string>
+        
+    
 </resources>

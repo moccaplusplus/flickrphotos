@@ -17,7 +17,10 @@ import com.tomaszgawel.flickrphotos.volley.VolleyHelper;
 public final class PhotoSearchStateFragment extends Fragment
 implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 
-	public static final String TAG = PhotoSearchStateFragment.class.getName();
+	public static final String API_KEY = "7acf6968c81051637d18ebeb85258588";
+	public static int COUNT_PER_PAGE = 45;
+
+	private static final String TAG = PhotoSearchStateFragment.class.getName();
 
 	public static void init(PhotoSearchActivity a) {
 		final FragmentManager fm = a.getFragmentManager();
@@ -30,7 +33,7 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 			if (f.hasRunningQuery()) {
 				a.onLoading(f.mQuery, f.mPage);
 			} else if (f.mResponse != null) {
-				a.onResult(f.mResponse, f.mHasNextPage);
+				a.onResult(f.mResponse);
 			} else if (f.mError != null) {
 				a.onError(f.mError);
 			}
@@ -48,7 +51,6 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 	private VolleyError mError;
 	private PhotoSearchPage mResponse;
 	private int mPage;
-	private boolean mHasNextPage;
 
 	public PhotoSearchStateFragment() {
 		setRetainInstance(true);
@@ -81,6 +83,7 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 
 	@Override
 	public void onErrorResponse(VolleyError error) {
+		mLastRequest = null;
 		mError = error;
 		if (getActivity() != null) {
 			((PhotoSearchActivity) getActivity()).onError(mError);
@@ -89,11 +92,10 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 
 	@Override
 	public void onResponse(PhotoSearchPage response) {
+		mLastRequest = null;
 		mResponse = response;
-		mHasNextPage = mResponse.pageCount > mPage;
 		if (getActivity() != null) {
-			((PhotoSearchActivity) getActivity()).onResult(
-					mResponse, mHasNextPage);
+			((PhotoSearchActivity) getActivity()).onResult(mResponse);
 		}
 	}
 
@@ -105,7 +107,18 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 	}
 
 	public boolean nextPage() {
-		if (!hasNextPage()) {
+		return toPage(mPage + 1);
+	}
+
+	public boolean prevPage() {
+		return toPage(mPage - 1);
+	}
+
+	public boolean toPage(int page) {
+		if (page > mResponse.pageCount) {
+			return false;
+		}
+		if (page < 1) {
 			return false;
 		}
 		if (hasRunningQuery()) {
@@ -114,22 +127,24 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 		if (TextUtils.isEmpty(mQuery)) {
 			return false;
 		}
-		mPage++;
+		mPage = page;
 		queueRequest();
 		return true;
 	}
 
-	public boolean hasNextPage() {
-		return mHasNextPage;
+	public boolean hasRunningQuery() {
+		return mLastRequest != null;
 	}
 
-	public boolean hasRunningQuery() {
-		return mLastRequest == null;
+	public void requery() {
+		if (mLastRequest == null) {
+			queueRequest();
+		}
 	}
 
 	private void queueRequest() {
-		mLastRequest = new PhotoSearchRequest(getApiKey(), mQuery, mPage,
-				getCountPerPage(), mLocationHelper.getLocation(), this, this);
+		mLastRequest = new PhotoSearchRequest(API_KEY, mQuery, mPage,
+		        COUNT_PER_PAGE, mLocationHelper.getLocation(), this, this);
 		mVolleyHelper.requestQueue.add(mLastRequest);
 		if (getActivity() != null) {
 			((PhotoSearchActivity) getActivity()).onLoading(mQuery, mPage);
@@ -144,15 +159,5 @@ implements Listener<PhotoSearchPage>, ErrorListener, LocationHelper.Listener {
 		mQuery = null;
 		mError = null;
 		mResponse = null;
-		mHasNextPage = false;
-	}
-
-	private String getApiKey() {
-		// TODO : put api key to preferences
-		return AppPreferencesActivity.API_KEY;
-	}
-
-	private int getCountPerPage() {
-		return AppPreferencesActivity.COUNT_PER_PAGE;
 	}
 }

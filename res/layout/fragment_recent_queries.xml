@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:divider="?android:attr/listDivider"
+    style="?android:attr/dialogLayout"
     android:showDividers="middle" >
 
     <FrameLayout
-        style="?android:attr/dialogLayout"
         android:layout_width="match_parent"
         android:layout_height="300dp" >
 
@@ -23,14 +23,13 @@
             android:id="@+id/listView"
             android:divider="?android:attr/listDividerAlertDialog"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:orientation="horizontal"
         tools:ignore="InefficientWeight" >
 

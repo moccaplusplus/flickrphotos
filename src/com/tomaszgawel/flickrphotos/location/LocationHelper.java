@@ -10,6 +10,9 @@ import android.provider.Settings;
 
 public class LocationHelper {
 
+	private static final float MIN_DISTANCE = 10;
+	private static final long MIN_TIME = 60 * 1000;
+
 	public static void openLocationSettings(Context context) {
 		context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 	}
@@ -55,7 +58,7 @@ public class LocationHelper {
 		if (mIsNetworkProviderEnabled && mLocation == null) {
 			mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		}
-		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mGpsListener);
+		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, mGpsListener);
 		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mNetworkListener);
 
 		if (mListener != null) {

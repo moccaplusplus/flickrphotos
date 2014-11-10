@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.android.volley.toolbox.NetworkImageView
+    <view class="com.tomaszgawel.flickrphotos.adapter.SearchResultsAdapter$SquareImageView"
         android:id="@+id/imageView"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:background="#33999999"
-        android:layout_gravity="top|center_horizontal"
-    	android:padding="6dp"
-        android:scaleType="fitCenter" />
+        android:layout_gravity="fill"
+        android:adjustViewBounds="false"
+    	android:padding="6dp" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="160dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="3dp"
         android:ellipsize="end"
