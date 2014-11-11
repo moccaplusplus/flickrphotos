@@ -45,7 +45,6 @@ public class PhotoSearchRequest extends Request<PhotoSearchPage> {
 			final PhotoSearchResponse result = PhotoSearchResponse.parse(json);
 			result.throwIfFailed();
 			final Entry cache = HttpHeaderParser.parseCacheHeaders(response);
-			cache.data = PhotoSearchResponse.asBytes(result);
 			cache.ttl = cache.softTtl = cache.serverDate + 30 * 60 * 1000;
 			return Response.success(result.photoSearchPage, cache);
 		} catch (UnsupportedEncodingException e) {
